@@ -1,0 +1,66 @@
+[gd_scene load_steps=9 format=3 uid="uid://d5ppfuiylbcl"]
+
+[ext_resource type="Script" path="res://scrpts/player.gd" id="1_51jgr"]
+[ext_resource type="Texture2D" uid="uid://cbculymgabec3" path="res://icon.svg" id="2_apbn7"]
+[ext_resource type="Texture2D" uid="uid://dcvi682o3hmh6" path="res://assets/sprites/sky_blue_capsule.png" id="2_qi0tg"]
+[ext_resource type="Texture2D" uid="uid://k40h1r248ts7" path="res://assets/sprites/temp_gun.png" id="3_8ekfh"]
+[ext_resource type="Texture2D" uid="uid://cq26sckglnhy3" path="res://joystick/joystick_assets/boundaries.png" id="3_gfuvj"]
+[ext_resource type="PackedScene" uid="uid://clm3xq50wgeo5" path="res://joystick/joystick.tscn" id="4_l2q3b"]
+[ext_resource type="Texture2D" uid="uid://gw1uhfmjh70b" path="res://joystick/joystick_assets/handle.png" id="5_imurj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_bdgk1"]
+radius = 18.0
+height = 78.0
+
+[node name="World" type="Node2D"]
+
+[node name="player" type="CharacterBody2D" parent="."]
+position = Vector2(512, 300)
+script = ExtResource("1_51jgr")
+max_speed = 200
+accel = 16.0
+deaccel = 32.0
+lerp_factor = 0.5
+
+[node name="joystick" type="Node2D" parent="player"]
+
+[node name="left_button" parent="player/joystick" instance=ExtResource("4_l2q3b")]
+position = Vector2(-350, 177)
+
+[node name="right_button" parent="player/joystick" instance=ExtResource("4_l2q3b")]
+position = Vector2(377, 177)
+
+[node name="Icon" type="Sprite2D" parent="player"]
+scale = Vector2(0.165289, 0.18022)
+texture = ExtResource("2_qi0tg")
+
+[node name="collision_body" type="CollisionShape2D" parent="player"]
+shape = SubResource("CapsuleShape2D_bdgk1")
+
+[node name="guns" type="Node2D" parent="player"]
+position = Vector2(0, -19)
+
+[node name="TempGun" type="Sprite2D" parent="player/guns"]
+position = Vector2(33, 0)
+rotation = 1.57079
+scale = Vector2(0.10606, 0.225439)
+texture = ExtResource("3_8ekfh")
+
+[node name="front_pointer" type="Marker2D" parent="player/guns"]
+position = Vector2(53, 0)
+
+[node name="camera" type="Camera2D" parent="player"]
+position = Vector2(2.69299, 0)
+position_smoothing_enabled = true
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(226, 195)
+texture = ExtResource("2_apbn7")
+
+[node name="Handle" type="Sprite2D" parent="."]
+position = Vector2(747, 173)
+texture = ExtResource("5_imurj")
+
+[node name="Boundaries" type="Sprite2D" parent="."]
+position = Vector2(540, 311)
+texture = ExtResource("3_gfuvj")
