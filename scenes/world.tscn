@@ -22,14 +22,6 @@ accel = 16.0
 deaccel = 32.0
 lerp_factor = 0.5
 
-[node name="joystick" type="Node2D" parent="player"]
-
-[node name="left_button" parent="player/joystick" instance=ExtResource("4_l2q3b")]
-position = Vector2(-350, 177)
-
-[node name="right_button" parent="player/joystick" instance=ExtResource("4_l2q3b")]
-position = Vector2(377, 177)
-
 [node name="Icon" type="Sprite2D" parent="player"]
 scale = Vector2(0.165289, 0.18022)
 texture = ExtResource("2_qi0tg")
@@ -50,8 +42,15 @@ texture = ExtResource("3_8ekfh")
 position = Vector2(53, 0)
 
 [node name="camera" type="Camera2D" parent="player"]
-position = Vector2(2.69299, 0)
-position_smoothing_enabled = true
+
+[node name="joystick" type="Node2D" parent="player/camera"]
+position = Vector2(-2.69299, 0)
+
+[node name="left_button" parent="player/camera/joystick" instance=ExtResource("4_l2q3b")]
+position = Vector2(-350, 177)
+
+[node name="right_button" parent="player/camera/joystick" instance=ExtResource("4_l2q3b")]
+position = Vector2(377, 177)
 
 [node name="Icon" type="Sprite2D" parent="."]
 position = Vector2(226, 195)

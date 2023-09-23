@@ -25,8 +25,8 @@ var input = {
 }
 
 @onready var gun_node = $guns
-@onready var l_contro = $joystick/left_button
-@onready var r_contro = $joystick/right_button
+@onready var l_contro = $camera/joystick/left_button
+@onready var r_contro = $camera/joystick/right_button
 
 func _physics_process(delta):
 	read_input()
@@ -49,12 +49,25 @@ func process_input(input,reconcilating = false):
 		if(input["right_joystick"]["pressed"]):
 			gun_node.look_at(gun_node.global_position + input["right_joystick"]["vector"])
 		var new_direc
-		if(input["left_joystick"]["pressed"]):
+		if(input["left_joystick"]["pressed"] and (input["left_joystick"]["shoot"])):
 			new_direc = input["left_joystick"]["vector"]
 			new_direc = new_direc.normalized()
 			speed = min(speed+accel,max_speed)
+			var new_camera_pos = input["left_joystick"]["vector"]
+			new_camera_pos = new_camera_pos/2
+			$camera.position = lerp($camera.position,new_camera_pos,0.1)
+			#var new_camera_pos = new_camera_pos.normalized()*3 
+		elif(input["left_joystick"]["pressed"] and (!input["left_joystick"]["shoot"])):
+			new_direc = input["left_joystick"]["vector"]
+			new_direc = new_direc.normalized()
+			var new_camera_pos = input["left_joystick"]["vector"]
+			new_camera_pos = new_camera_pos/2
+			$camera.position = lerp($camera.position,new_camera_pos,0.1)
+			speed = 0
 		else:
 			new_direc = Vector2.ZERO
+			var new_camera_pos = Vector2.ZERO
+			$camera.position = lerp($camera.position,new_camera_pos,0.2)
 			speed = max(0,speed-deaccel)
 		
 		current_direction = lerp(current_direction,new_direc,lerp_factor)
