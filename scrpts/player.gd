@@ -53,16 +53,11 @@ func process_input(input,reconcilating = false):
 			new_direc = input["left_joystick"]["vector"]
 			new_direc = new_direc.normalized()
 			speed = min(speed+accel,max_speed)
-			var new_camera_pos = input["left_joystick"]["vector"]
-			new_camera_pos = new_camera_pos/2
-			$camera.position = lerp($camera.position,new_camera_pos,0.1)
+			
 			#var new_camera_pos = new_camera_pos.normalized()*3 
 		elif(input["left_joystick"]["pressed"] and (!input["left_joystick"]["shoot"])):
 			new_direc = input["left_joystick"]["vector"]
 			new_direc = new_direc.normalized()
-			var new_camera_pos = input["left_joystick"]["vector"]
-			new_camera_pos = new_camera_pos/2
-			$camera.position = lerp($camera.position,new_camera_pos,0.1)
 			speed = 0
 		else:
 			new_direc = Vector2.ZERO
@@ -74,6 +69,14 @@ func process_input(input,reconcilating = false):
 		current_direction = current_direction.normalized()
 		velocity = current_direction * speed
 		move_and_slide()	
+		## no need to implement this code on server
+		if(input["right_joystick"]["pressed"]):
+			var new_camera_pos = input["right_joystick"]["vector"]
+			new_camera_pos = new_camera_pos/2
+			$camera.position = lerp($camera.position,new_camera_pos,0.1)
+		else:
+			var new_camera_pos = Vector2.ZERO
+			$camera.position = lerp($camera.position,new_camera_pos,0.2)
 		pass
 	pass
 	
